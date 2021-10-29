@@ -60,7 +60,7 @@ func TestSetCookie(t *testing.T) {
 func TestGetCookie(t *testing.T) {
 	req := httptest.NewRequest("GET", "localhost:8080", nil)
 	cookie := new(http.Cookie)
-	cookie.Name = "Name"
+	cookie.Name = "token"
 	cookie.Value = "Ini Isi Cookie"
 	req.AddCookie(cookie)
 
