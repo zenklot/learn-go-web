@@ -27,16 +27,17 @@ func TestHttp(t *testing.T) {
 }
 
 func SayHello(writer http.ResponseWriter, request *http.Request) {
-	name := request.URL.Query().Get("name")
-	if name == "" {
+	name := request.URL.Query().Get("first_name")
+	last := request.URL.Query().Get("last_name")
+	if name == "" && last == "" {
 		fmt.Fprint(writer, "Hello")
 	} else {
-		fmt.Fprintf(writer, "Hello %s", name)
+		fmt.Fprintf(writer, "Hello %s %s", name, last)
 	}
 }
 
 func TestQuery(t *testing.T) {
-	request := httptest.NewRequest("GET", "localhost:8080/hello?name=gozenx", nil)
+	request := httptest.NewRequest("GET", "localhost:8080/hello?last_name=gozenx", nil)
 
 	recorder := httptest.NewRecorder()
 
