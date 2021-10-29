@@ -25,3 +25,26 @@ func TestHttp(t *testing.T) {
 	fmt.Println(response.Status)
 	fmt.Println(string(body))
 }
+
+func SayHello(writer http.ResponseWriter, request *http.Request) {
+	name := request.URL.Query().Get("name")
+	if name == "" {
+		fmt.Fprint(writer, "Hello")
+	} else {
+		fmt.Fprintf(writer, "Hello %s", name)
+	}
+}
+
+func TestQuery(t *testing.T) {
+	request := httptest.NewRequest("GET", "localhost:8080/hello?name=gozenx", nil)
+
+	recorder := httptest.NewRecorder()
+
+	SayHello(recorder, request)
+
+	response := recorder.Result()
+
+	body, _ := io.ReadAll(response.Body)
+	fmt.Println(string(body))
+
+}
